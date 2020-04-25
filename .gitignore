@@ -1,3 +1,7 @@
+# Build results
+[Bb]uild/
+
+
 # Prerequisites
 *.d
 
