@@ -2,7 +2,7 @@
 #include "DailyCodingProblem.h"
 #include <iostream>
 
-TEST(DailyCodingProblemTest, KClosestElements)
+TEST(DailyCodingProblemTest, FindClosestElements)
 {
     using T = int;
 
