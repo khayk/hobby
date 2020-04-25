@@ -1,13 +1,14 @@
+dist: bionic
 language: cpp
 os:
   - linux
 
 compiler:
-  - clang
+  - gcc
 
 script:
   - mkdir build
   - cd build
-  - CXX=/usr/bin/clang++ CC=/usr/bin/clang cmake ../
+  - cmake ../
   - cmake --build .
   - ./daily/daily
