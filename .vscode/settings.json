@@ -52,5 +52,8 @@
         "streambuf": "cpp",
         "typeinfo": "cpp"
     },
-    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools"
+    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
+    "cSpell.enableFiletypes": [
+        "markdown"
+    ]
 }

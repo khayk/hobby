@@ -1,17 +1,13 @@
-dist: trusty
-sudo: false
 language: cpp
+os:
+  - linux
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-6
+compiler:
+  - clang
 
 script:
   - mkdir build
   - cd build
-  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake ../
+  - CXX=/usr/bin/clang++ CC=/usr/bin/clang cmake ../
   - cmake --build .
   - ./daily/daily

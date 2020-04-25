@@ -1,6 +1,7 @@
 #ifndef __DAILY_CODING_PROBLEM_H__
 #define __DAILY_CODING_PROBLEM_H__
 
+#include <cstdint>
 #include <vector>
 #include <type_traits>
 
