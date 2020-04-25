@@ -9,7 +9,6 @@ endif()
 
 set(CMAKE_CXX_STANDARD 17)
 
-
 # Google test library staff
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
