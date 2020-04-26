@@ -1,6 +1,8 @@
 # Build results
 [Bb]uild/
 
+# Visual Studio files
+.vs/
 
 # Prerequisites
 *.d
@@ -34,3 +36,4 @@
 *.exe
 *.out
 *.app
+CMakeSettings.json
