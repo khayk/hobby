@@ -6,7 +6,7 @@ using namespace dp;
 
 TEST(DailyCodingProblemTest, FindClosestElements)
 {
-    int k;
+    size_t k;
     int pivot;
     std::vector<int> numbers;
     std::vector<int> expected;
@@ -44,7 +44,7 @@ TEST(DailyCodingProblemTest, FindClosestElements)
 
 TEST(DailyCodingProblemTest, FindClosestPoints)
 {
-    int k;
+    size_t k;
     Point origin {0, 0};
     std::vector<Point> points;
     std::vector<Point> expected;
@@ -65,9 +65,45 @@ TEST(DailyCodingProblemTest, FindClosestPoints)
 
 TEST(DailyCodingProblemTest, IsBuddyStrings)
 {
-    EXPECT_EQ(isBuddyStrings("ab"       , "ba"       ), true);
-    EXPECT_EQ(isBuddyStrings("ab"       , "ab"       ), false);
-    EXPECT_EQ(isBuddyStrings("aa"       , "aa"       ), true);
-    EXPECT_EQ(isBuddyStrings("aaaaaaabc", "aaaaaaacb"), true);
-    EXPECT_EQ(isBuddyStrings(""         , "aa"       ), false);
+    std::string a;
+    std::string b;
+
+    a = "ab";
+    b = "ba";
+    EXPECT_EQ(isBuddyStrings(a, b), true);
+
+    a = "ab";
+    b = "ab";
+    EXPECT_EQ(isBuddyStrings(a, b), false);
+
+    a = "aa";
+    b = "aa";
+    EXPECT_EQ(isBuddyStrings(a, b), true);
+
+    a = "aaaaaaabc";
+    b = "aaaaaaacb";
+    EXPECT_EQ(isBuddyStrings(a, b), true);
+
+    a = "";
+    b = "aa";
+    EXPECT_EQ(isBuddyStrings(a, b), false);
+}
+
+
+TEST(DailyCodingProblemTest, IsNumber)
+{
+    EXPECT_EQ(isNumber("123"),   true);   // Integer
+    EXPECT_EQ(isNumber("12.3"),  true);   // Floating point
+    EXPECT_EQ(isNumber("-123"),  true);   // Negative numbers
+    EXPECT_EQ(isNumber("-.3"),   true);   // Negative floating point
+    EXPECT_EQ(isNumber("1.5e5"), true);   // Scientific notation
+    EXPECT_EQ(isNumber("5"),     true);
+    EXPECT_EQ(isNumber("0"),     true);
+
+    EXPECT_EQ(isNumber("12a"),   false);
+    EXPECT_EQ(isNumber("1 2"),   false);
+    EXPECT_EQ(isNumber("1e1.2"), false);
+    EXPECT_EQ(isNumber("xabc"),  false);
+    EXPECT_EQ(isNumber("7.2a"),  false);
+    EXPECT_EQ(isNumber(""),      false);
 }

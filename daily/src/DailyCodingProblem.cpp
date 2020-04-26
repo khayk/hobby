@@ -35,7 +35,7 @@ std::vector<int> findClosestElements(const std::vector<int>& numbers, size_t k, 
 
 std::vector<Point> findClosestPoints(const std::vector<Point>& points,
                                      const Point& origin,
-                                     int k)
+                                     size_t k)
 {
     struct PointInfo
     {
@@ -48,7 +48,7 @@ std::vector<Point> findClosestPoints(const std::vector<Point>& points,
         return lhs.distance < rhs.distance;
     };
 
-    // Prepare vector to prority queue, reserved beforehead
+    // Prepare vector to priority queue, reserved beforehead
     std::vector<PointInfo> v;
     v.reserve(k);
 
@@ -86,6 +86,7 @@ std::vector<Point> findClosestPoints(const std::vector<Point>& points,
     return result;
 }
 
+
 bool isBuddyStrings(const std::string& first, const std::string& second)
 {
     size_t mismatchCount {0};
@@ -122,10 +123,50 @@ bool isBuddyStrings(const std::string& first, const std::string& second)
     bool hasDuplicate = std::find_if(begin(firstFrequency), end(firstFrequency),
                         [](const int i) { return i > 1; }) != firstFrequency.end();
 
-    bool hasSwap = (first[mismatches[0]] == second[mismatches[1]] && 
+    bool hasSwap = (first[mismatches[0]] == second[mismatches[1]] &&
                     first[mismatches[1]] == second[mismatches[0]]);
 
     return  (mismatchCount == 0 && hasDuplicate) || (mismatchCount == 2 && hasSwap);
+}
+
+
+bool isNumber(const std::string& str)
+{
+    bool signProcessed {false};
+    bool decimalPointProcessed {false};
+    bool scientificSymbolProcessed {false};
+    bool digitDiscovered {false};
+
+    for (auto ch: str)
+    {
+        if (isdigit(ch))
+        {
+            // no sign is allowed after the digit
+            signProcessed = true;
+            digitDiscovered = true;
+        }
+        else if (ch == '-' || ch == '+')
+        {
+            if (signProcessed || decimalPointProcessed) { return false; }
+            signProcessed = true;
+        }
+        else if (ch == '.')
+        {
+            if (decimalPointProcessed || scientificSymbolProcessed) { return false; }
+            decimalPointProcessed = true;
+        }
+        else if (ch == 'e')
+        {
+            if (scientificSymbolProcessed) { return false; }
+            scientificSymbolProcessed = true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    return !str.empty() && isdigit(str.back());
 }
 
 } // namespace dp

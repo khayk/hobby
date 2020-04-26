@@ -38,7 +38,7 @@ std::vector<int> findClosestElements(const std::vector<int>& numbers,
  */
 std::vector<Point> findClosestPoints(const std::vector<Point>& points,
                                      const Point& origin,
-                                     int k);
+                                     size_t k);
 
 /**
  * @brief Given two strings A and B of lowercase letters, return true if and
@@ -50,6 +50,15 @@ std::vector<Point> findClosestPoints(const std::vector<Point>& points,
  * @return Boolean answer to the original question
  */
 bool isBuddyStrings(const std::string& first, const std::string& second);
+
+/**
+ * @brief  Given a string that may represent a number, determine if it is a number
+ *
+ * @param str  Input string
+ *
+ * @return true if the string represents a number, false otherwise
+ */
+bool isNumber(const std::string& str);
 
 } // namespace dp
 
