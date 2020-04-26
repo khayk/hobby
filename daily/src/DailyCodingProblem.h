@@ -4,6 +4,12 @@
 #include <cstdint>
 #include <vector>
 #include <type_traits>
+#include <string>
+
+/**
+ * @brief Namespace for Daily Problem
+ */
+namespace dp {
 
 using Point = std::tuple<int, int>;
 
@@ -34,5 +40,17 @@ std::vector<Point> findClosestPoints(const std::vector<Point>& points,
                                      const Point& origin,
                                      int k);
 
+/**
+ * @brief Given two strings A and B of lowercase letters, return true if and
+ *        only if we can swap two letters in A so that the result equals B.
+ *
+ * @param first  First string
+ * @param second Second string
+ *
+ * @return Boolean answer to the original question
+ */
+bool isBuddyStrings(const std::string& first, const std::string& second);
+
+} // namespace dp
 
 #endif // !__DAILY_CODING_PROBLEM_H__

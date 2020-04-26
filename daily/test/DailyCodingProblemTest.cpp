@@ -2,6 +2,8 @@
 #include "DailyCodingProblem.h"
 #include <iostream>
 
+using namespace dp;
+
 TEST(DailyCodingProblemTest, FindClosestElements)
 {
     int k;
@@ -15,7 +17,6 @@ TEST(DailyCodingProblemTest, FindClosestElements)
     numbers  = {1, 3, 7, 8, 9};
     expected = {3, 7, 8};
     actual   = findClosestElements(numbers, k, pivot);
-
     EXPECT_EQ(actual, expected);
 
     k        = 4;
@@ -23,7 +24,6 @@ TEST(DailyCodingProblemTest, FindClosestElements)
     numbers  = {1, 2, 3, 4, 5};
     expected = {1, 2, 3, 4};
     actual   = findClosestElements(numbers, k, pivot);
-
     EXPECT_EQ(actual, expected);
 
     k        = 4;
@@ -31,7 +31,6 @@ TEST(DailyCodingProblemTest, FindClosestElements)
     numbers  = {1, 2, 3, 4, 5};
     expected = {1, 2, 3, 4};
     actual   = findClosestElements(numbers, k, pivot);
-
     EXPECT_EQ(actual, expected);
 
     k        = 4;
@@ -39,7 +38,6 @@ TEST(DailyCodingProblemTest, FindClosestElements)
     numbers  = {12, 16, 22, 30, 35, 39, 42, 45, 48, 50, 53, 55, 56};
     expected = {30, 35, 39, 42};
     actual   = findClosestElements(numbers, k, pivot);
-
     EXPECT_EQ(actual, expected);
 }
 
@@ -56,13 +54,20 @@ TEST(DailyCodingProblemTest, FindClosestPoints)
     points   = {{0, 0}, {1, 2}, {-3, 4}, {3, 1}};
     expected = {{0, 0}, {1, 2}};
     actual   = findClosestPoints(points, origin, k);
-
     EXPECT_EQ(actual, expected);
 
     k = 2;
     points   = {{3, 3}, {5, -1}, {-2, 4}};
     expected = {{3, 3}, {-2, 4}};
     actual   = findClosestPoints(points, origin, k);
-
     EXPECT_EQ(actual, expected);
+}
+
+TEST(DailyCodingProblemTest, IsBuddyStrings)
+{
+    EXPECT_EQ(isBuddyStrings("ab"       , "ba"       ), true);
+    EXPECT_EQ(isBuddyStrings("ab"       , "ab"       ), false);
+    EXPECT_EQ(isBuddyStrings("aa"       , "aa"       ), true);
+    EXPECT_EQ(isBuddyStrings("aaaaaaabc", "aaaaaaacb"), true);
+    EXPECT_EQ(isBuddyStrings(""         , "aa"       ), false);
 }

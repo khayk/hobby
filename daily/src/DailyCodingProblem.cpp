@@ -1,10 +1,13 @@
 #include "DailyCodingProblem.h"
+
+#include <unordered_map>
+#include <algorithm>
 #include <limits>
 #include <cmath>
-#include <algorithm>
-#include <unordered_map>
 #include <queue>
+#include <array>
 
+namespace dp {
 
 std::vector<int> findClosestElements(const std::vector<int>& numbers, size_t k, int x)
 {
@@ -82,3 +85,47 @@ std::vector<Point> findClosestPoints(const std::vector<Point>& points,
 
     return result;
 }
+
+bool isBuddyStrings(const std::string& first, const std::string& second)
+{
+    size_t mismatchCount {0};
+    std::array<size_t, 2> mismatches = {0};
+    std::array<int, 26> firstFrequency {0};
+
+    if (first.size() != second.size())
+    {
+        return false;
+    }
+
+    for (size_t i = 0; i < first.size(); ++i)
+    {
+        int relativeIndex = first[i] - 'a';
+
+        if (relativeIndex < 0 || relativeIndex > 25)
+        {
+            return false;
+        }
+
+        ++firstFrequency[relativeIndex];
+
+        if (first[i] != second[i])
+        {
+            mismatches[mismatchCount++] = i;
+
+            if (mismatchCount > 2)
+            {
+                return false;
+            }
+        }
+    }
+
+    bool hasDuplicate = std::find_if(begin(firstFrequency), end(firstFrequency),
+                        [](const int i) { return i > 1; }) != firstFrequency.end();
+
+    bool hasSwap = (first[mismatches[0]] == second[mismatches[1]] && 
+                    first[mismatches[1]] == second[mismatches[0]]);
+
+    return  (mismatchCount == 0 && hasDuplicate) || (mismatchCount == 2 && hasSwap);
+}
+
+} // namespace dp
