@@ -1,6 +1,5 @@
-#include <gtest/gtest.h>
+﻿#include <gtest/gtest.h>
 #include "DailyCodingProblem.h"
-#include <iostream>
 
 using namespace dp;
 
@@ -106,4 +105,75 @@ TEST(DailyCodingProblemTest, IsNumber)
     EXPECT_EQ(isNumber("xabc"),  false);
     EXPECT_EQ(isNumber("7.2a"),  false);
     EXPECT_EQ(isNumber(""),      false);
+}
+
+bool isBigEndian()
+{
+    union
+    {
+        uint32_t i;
+        char c[4];
+    } bint = {0x01020304};
+
+    return bint.c[0] == 1;
+}
+
+TEST(DailyCodingProblemTest, Utf8Validator)
+{
+    unsigned char buffer[8] = {0};
+    size_t errorOffset;
+
+    auto pack = [&](uint32_t value)
+    {
+        if (!isBigEndian())
+        {
+            memset(buffer, 0, sizeof(buffer));
+            unsigned char* p = buffer;
+            unsigned char* v = (unsigned char*) &value + sizeof(decltype(value)) - 1;
+
+            while ((v > (unsigned char*) &value) && *v == 0)
+                --v;
+
+            while (v >= (unsigned char*) &value)
+                *p++ = *v--;
+        }
+        else
+        {
+            *reinterpret_cast<decltype(value)*>(buffer) = value;
+        }
+    };
+
+    pack(0b00000000);
+    EXPECT_EQ(utf8Validator(buffer, 1), true);
+
+    pack(0b00000000'10000000);
+    EXPECT_EQ(utf8Validator(buffer, 2, &errorOffset), false);
+    EXPECT_EQ(errorOffset, 0);
+
+    pack(0b11000000'10000000);
+    EXPECT_EQ(utf8Validator(buffer, 2), true);
+
+    pack(0b11000010'10100010);
+    EXPECT_EQ(utf8Validator(buffer, 2), true);
+
+    pack(0b11100000'10100100'10111001); // ह character, 0xE0A4B9
+    EXPECT_EQ(utf8Validator(buffer, 3), true);
+
+    pack(0x0024);       // $ character
+    EXPECT_EQ(utf8Validator(buffer, 1), true);
+
+    pack(0xC2A2);       // ¢ character
+    EXPECT_EQ(utf8Validator(buffer, 2), true);
+
+    pack(0xE0A4B9);     // ह character
+    EXPECT_EQ(utf8Validator(buffer, 3), true);
+
+    pack(0xE282AC);     // € character
+    EXPECT_EQ(utf8Validator(buffer, 3), true);
+
+    pack(0xED959C);     // 한 character
+    EXPECT_EQ(utf8Validator(buffer, 3), true);
+
+    pack(0xF0908D88);   // 𐍈 character
+    EXPECT_EQ(utf8Validator(buffer, 4), true);
 }

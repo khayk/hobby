@@ -157,7 +157,7 @@ bool isNumber(const std::string& str)
         }
         else if (ch == 'e')
         {
-            if (scientificSymbolProcessed) { return false; }
+            if (scientificSymbolProcessed || !digitDiscovered) { return false; }
             scientificSymbolProcessed = true;
         }
         else
@@ -167,6 +167,95 @@ bool isNumber(const std::string& str)
     }
 
     return !str.empty() && isdigit(str.back());
+}
+
+
+bool utf8Validator(const unsigned char* data, size_t size, size_t* errorOffset)
+{
+    // 1 byte:   0xxxxxxx
+    // 2 bytes:  110xxxxx 10xxxxxx
+    // 3 bytes : 1110xxxx 10xxxxxx 10xxxxxx
+    // 4 bytes : 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+
+    const unsigned char masks[] = {
+        0x80,   // 10000000
+        0xE0,   // 11100000
+        0xF0,   // 11110000
+        0xF8    // 11111000
+    };
+
+    const unsigned char byteEqual[] = {
+        0x0,    // 00000000
+        0xC0,   // 11000000
+        0xE0,   // 11100000
+        0xF0    // 11110000
+    };
+
+    // reset any offset before starting validation
+    if (errorOffset != nullptr)
+    {
+        *errorOffset = 0;
+    }
+
+    const size_t         c = sizeof(masks) / sizeof(masks[0]);
+    const unsigned char* p = data;
+    const unsigned char* e = data + size;
+
+    while (p < e)
+    {
+        // most common case
+        if ((*p & masks[0]) == byteEqual[0])
+        {
+            ++p;
+        }
+        else
+        {
+            size_t i;
+            for (i = 1; i < c; ++i)
+            {
+                if ((*p & masks[i]) == byteEqual[i])
+                {
+                    ++p;
+
+                    // expecting pattern 10xxxxxx i times
+                    for (size_t j = 0; j < i; ++j)
+                    {
+                        if (masks[0] != (*p & byteEqual[1]))
+                        {
+                            if (errorOffset != 0)
+                            {
+                                *errorOffset = p - data;
+                            }
+
+                            return false;
+                        }
+
+                        ++p;
+                    }
+
+                    break;
+                }
+            }
+
+            if (i == c)
+            {
+                if (errorOffset != 0)
+                {
+                    *errorOffset = p - data;
+                }
+
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
+bool utf8Validator(const std::string& data, size_t* errorOffset)
+{
+    return utf8Validator(reinterpret_cast<const unsigned char*>(data.data()), data.size(), errorOffset);
 }
 
 } // namespace dp

@@ -60,6 +60,20 @@ bool isBuddyStrings(const std::string& first, const std::string& second);
  */
 bool isNumber(const std::string& str);
 
+
+/**
+ * @brief Given a chunk of memory, return whether or not the it represnets a
+ *        valid UTF-8 encoding.
+ *
+ * @param data The memory to check
+ * @param size The size of the memory
+ * @param errorOffset If provided by the user should used to return offset of the first
+ *                    invalid byte that is supposed to be the part of UTF-8 encoding
+ * @return true if the given memory represent a characters written with UTF-8 encoding
+ */
+bool utf8Validator(const unsigned char* data, size_t size, size_t* errorOffset = 0);
+bool utf8Validator(const std::string& data, size_t* errorOffset = 0);
+
 } // namespace dp
 
 #endif // !__DAILY_CODING_PROBLEM_H__
