@@ -258,4 +258,67 @@ bool utf8Validator(const std::string& data, size_t* errorOffset)
     return utf8Validator(reinterpret_cast<const unsigned char*>(data.data()), data.size(), errorOffset);
 }
 
+
+bool isValidBlock(const std::string& digits, size_t offset, const size_t length)
+{
+    if (offset >= digits.size()) return false;
+
+    // corner case handling
+    if (digits[offset] == '0')
+    {
+        return length == 1;
+    }
+
+    size_t n = 0;
+
+    for (size_t i = offset; i < digits.size() && i < offset + length; ++i)
+    {
+        n = 10 * n + digits[i] - '0';
+    }
+
+    return (n > 0 && n < 256);
+}
+
+
+void extractGroups(const std::string& digits, size_t offset, size_t groups,
+                   std::vector<std::string>& result)
+{
+    if (groups == 1)
+    {
+        if (isValidBlock(digits, offset, digits.size() - offset))
+        {
+            result.push_back(digits.substr(offset));
+        }
+
+        return;
+    }
+
+    std::string candidate;
+
+    for (int i = 1; i <= 3; ++i)
+    {
+        std::vector<std::string> local;
+
+        if (isValidBlock(digits, offset, i))
+        {
+            candidate = digits.substr(offset, i);
+            extractGroups(digits, offset + i, groups - 1, local);
+
+            for (const auto& l : local)
+            {
+                result.push_back(candidate + "." + l);
+            }
+        }
+    }
+}
+
+
+std::vector<std::string> restoreIpAddresses(const std::string& digits)
+{
+    std::vector<std::string> addresses;
+    extractGroups(digits, 0, 4, addresses);
+
+    return addresses;
+}
+
 } // namespace dp

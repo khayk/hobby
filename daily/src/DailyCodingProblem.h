@@ -74,6 +74,20 @@ bool isNumber(const std::string& str);
 bool utf8Validator(const unsigned char* data, size_t size, size_t* errorOffset = 0);
 bool utf8Validator(const std::string& data, size_t* errorOffset = 0);
 
+
+/**
+ * @brief Given a string containing only digits, restore it by returning all
+ *        possible valid IP address combinations.
+ *
+ * @note A valid IP address consists of exactly four integers (each integer
+ *       is between 0 and 255) separated by single points.
+ *
+ * @param digits string of digits
+ *
+ * @return vector of valid ip address
+ */
+std::vector<std::string> restoreIpAddresses(const std::string& digits);
+
 } // namespace dp
 
 #endif // !__DAILY_CODING_PROBLEM_H__

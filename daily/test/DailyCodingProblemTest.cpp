@@ -177,3 +177,40 @@ TEST(DailyCodingProblemTest, Utf8Validator)
     pack(0xF0908D88);   // 𐍈 character
     EXPECT_EQ(utf8Validator(buffer, 4), true);
 }
+
+TEST(DailyCodingProblemTest, RestoreIpAddresses)
+{
+    std::string digits;
+    std::vector<std::string> expected;
+    std::vector<std::string> actual;
+
+    digits   = "1592551013";
+    expected = {"159.255.10.13", "159.255.101.3"};
+    actual   = restoreIpAddresses(digits);
+    EXPECT_EQ(actual, expected);
+
+    digits   = "25525511135";
+    expected = {"255.255.11.135", "255.255.111.35"};
+    actual   = restoreIpAddresses(digits);
+    EXPECT_EQ(actual, expected);
+
+    digits = "110100100";
+    expected = {"1.10.100.100", "11.0.100.100", "110.10.0.100", "110.100.10.0"};
+    actual = restoreIpAddresses(digits);
+    EXPECT_EQ(actual, expected);
+
+    digits = "011010010";
+    expected = {"0.110.100.10"};
+    actual = restoreIpAddresses(digits);
+    EXPECT_EQ(actual, expected);
+
+    digits = "0000";
+    expected = {"0.0.0.0"};
+    actual = restoreIpAddresses(digits);
+    EXPECT_EQ(actual, expected);
+
+    digits = "010010";
+    expected = {"0.10.0.10", "0.100.1.0"};
+    actual = restoreIpAddresses(digits);
+    EXPECT_EQ(actual, expected);
+}
