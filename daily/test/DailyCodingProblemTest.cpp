@@ -148,7 +148,7 @@ TEST(DailyCodingProblemTest, Utf8Validator)
 
     pack(0b00000000'10000000);
     EXPECT_EQ(utf8Validator(buffer, 2, &errorOffset), false);
-    EXPECT_EQ(errorOffset, 0);
+    EXPECT_EQ(errorOffset, 0u);
 
     pack(0b11000000'10000000);
     EXPECT_EQ(utf8Validator(buffer, 2), true);
