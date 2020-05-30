@@ -32,7 +32,8 @@ $fixCheckList="-checks=-*,
 llvm-namespace-comment,
 modernize-use-nullptr,
 modernize-use-override,
-readability-braces-around-statements
+readability-braces-around-statements,
+readability-uppercase-literal-suffix
 "
 
 # -cert-err58-cpp check actually is a good thing, but gaves false positive error on gtest files
