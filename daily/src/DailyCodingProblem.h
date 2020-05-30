@@ -23,8 +23,7 @@ using Point = std::tuple<int, int>;
  *
  * @return vector k closes numbers
  */
-std::vector<int> findClosestElements(const std::vector<int>& numbers,
-                                     size_t k, int x);
+std::vector<int> findClosestElements(const std::vector<int>& numbers, size_t k, int x);
 
 /**
  * @brief Given a list of points as a tuple (x, y) and an integer k,

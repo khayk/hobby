@@ -1,1 +1,1 @@
-find . -regex '.*\.\(cpp\|hpp\|h\|cc\|cxx\)' | xargs clang-format -i -style=file
+find . -regex '.*\.\(cpp\|hpp\|h\|cc\|cxx\)' -not -path "./build/*" | xargs clang-format -i -style=file
