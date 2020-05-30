@@ -5,8 +5,8 @@ using namespace dp;
 
 TEST(DailyCodingProblemTest, FindClosestElements)
 {
-    size_t k{0};
-    int pivot{0};
+    size_t k {0};
+    int pivot {0};
     std::vector<int> numbers;
     std::vector<int> expected;
     std::vector<int> actual;
@@ -128,7 +128,8 @@ TEST(DailyCodingProblemTest, Utf8Validator)
         {
             memset(buffer, 0, sizeof(buffer));
             unsigned char* p = buffer;
-            unsigned char* v = reinterpret_cast<unsigned char*>(&value) + sizeof(decltype(value)) - 1;
+            unsigned char* v =
+                reinterpret_cast<unsigned char*>(&value) + sizeof(decltype(value)) - 1;
 
             while ((v > reinterpret_cast<unsigned char*>(&value)) && *v == 0)
             {
