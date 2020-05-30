@@ -88,6 +88,14 @@ bool utf8Validator(const std::string& data, size_t* errorOffset = 0);
  */
 std::vector<std::string> restoreIpAddresses(const std::string& digits);
 
+/**
+ * @brief Move all 0's to the end of the array while maintaining the
+ *        relative order of the non-zero elements.
+ *
+ * @param numbers The array of integers
+ */
+void moveZeros(std::vector<int>& numbers);
+
 } // namespace dp
 
 #endif // !__DAILY_CODING_PROBLEM_H__

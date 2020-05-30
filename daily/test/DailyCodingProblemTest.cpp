@@ -214,3 +214,18 @@ TEST(DailyCodingProblemTest, RestoreIpAddresses)
     actual = restoreIpAddresses(digits);
     EXPECT_EQ(actual, expected);
 }
+
+TEST(DailyCodingProblemTest, MoveZeros)
+{
+    std::vector<int> numbers = {0, 1, 0, 3, 12};
+    std::vector<int> expected = {1, 3, 12, 0, 0};
+
+    moveZeros(numbers);
+    EXPECT_EQ(numbers, expected);
+
+    numbers  = {0, 0, 0, 2, 0, 1, 3, 4, 0, 0};
+    expected = {2, 1, 3, 4, 0, 0, 0, 0, 0, 0};
+
+    moveZeros(numbers);
+    EXPECT_EQ(numbers, expected);
+}

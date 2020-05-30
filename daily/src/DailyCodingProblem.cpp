@@ -329,4 +329,23 @@ std::vector<std::string> restoreIpAddresses(const std::string& digits)
     return addresses;
 }
 
+void moveZeros(std::vector<int>& numbers)
+{
+    size_t writePos = 0;
+
+    for (size_t i = 0; i < numbers.size(); ++i)
+    {
+        if (numbers[i] != 0)
+        {
+            numbers[writePos] = numbers[i];
+            writePos++;
+        }
+    }
+
+    while (writePos < numbers.size())
+    {
+        numbers[writePos++] = 0;
+    }
+}
+
 } // namespace dp
