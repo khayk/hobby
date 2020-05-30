@@ -5,8 +5,8 @@ using namespace dp;
 
 TEST(DailyCodingProblemTest, FindClosestElements)
 {
-    size_t k;
-    int pivot;
+    size_t k{0};
+    int pivot{0};
     std::vector<int> numbers;
     std::vector<int> expected;
     std::vector<int> actual;
@@ -43,7 +43,7 @@ TEST(DailyCodingProblemTest, FindClosestElements)
 
 TEST(DailyCodingProblemTest, FindClosestPoints)
 {
-    size_t k;
+    size_t k {0};
     Point origin {0, 0};
     std::vector<Point> points;
     std::vector<Point> expected;
@@ -121,21 +121,21 @@ bool isBigEndian()
 TEST(DailyCodingProblemTest, Utf8Validator)
 {
     unsigned char buffer[8] = {0};
-    size_t errorOffset;
+    size_t errorOffset {0};
 
     auto pack = [&](uint32_t value) {
         if (!isBigEndian())
         {
             memset(buffer, 0, sizeof(buffer));
             unsigned char* p = buffer;
-            unsigned char* v = (unsigned char*) &value + sizeof(decltype(value)) - 1;
+            unsigned char* v = reinterpret_cast<unsigned char*>(&value) + sizeof(decltype(value)) - 1;
 
-            while ((v > (unsigned char*) &value) && *v == 0)
+            while ((v > reinterpret_cast<unsigned char*>(&value)) && *v == 0)
             {
                 --v;
             }
 
-            while (v >= (unsigned char*) &value)
+            while (v >= reinterpret_cast<unsigned char*>(&value))
             {
                 *p++ = *v--;
             }
@@ -151,7 +151,7 @@ TEST(DailyCodingProblemTest, Utf8Validator)
 
     pack(0b00000000'10000000);
     EXPECT_EQ(utf8Validator(buffer, 2, &errorOffset), false);
-    EXPECT_EQ(errorOffset, 0u);
+    EXPECT_EQ(errorOffset, 0U);
 
     pack(0b11000000'10000000);
     EXPECT_EQ(utf8Validator(buffer, 2), true);
