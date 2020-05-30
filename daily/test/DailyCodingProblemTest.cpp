@@ -130,9 +130,15 @@ TEST(DailyCodingProblemTest, Utf8Validator)
             unsigned char* p = buffer;
             unsigned char* v = (unsigned char*) &value + sizeof(decltype(value)) - 1;
 
-            while ((v > (unsigned char*) &value) && *v == 0) --v;
+            while ((v > (unsigned char*) &value) && *v == 0)
+            {
+                --v;
+            }
 
-            while (v >= (unsigned char*) &value) *p++ = *v--;
+            while (v >= (unsigned char*) &value)
+            {
+                *p++ = *v--;
+            }
         }
         else
         {
