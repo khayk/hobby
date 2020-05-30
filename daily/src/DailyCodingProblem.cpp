@@ -21,7 +21,7 @@ std::vector<int> findClosestElements(const std::vector<int>& numbers, size_t k, 
         if (dist < std::abs(result[i] - x))
         {
             result[i++] = n;
-            i = i % k;
+            i           = i % k;
         }
     }
 
@@ -40,11 +40,10 @@ std::vector<Point> findClosestPoints(const std::vector<Point>& points,
     struct PointInfo
     {
         size_t distance;
-        size_t index;   // index of the element in the original `points` array
+        size_t index; // index of the element in the original `points` array
     };
 
-    auto furthest = [](const PointInfo& lhs, const PointInfo& rhs)
-    {
+    auto furthest = [](const PointInfo& lhs, const PointInfo& rhs) {
         return lhs.distance < rhs.distance;
     };
 
@@ -53,8 +52,9 @@ std::vector<Point> findClosestPoints(const std::vector<Point>& points,
     v.reserve(k);
 
     // Maintain a priority queue, where the top element is the fartest one
-    std::priority_queue<PointInfo, std::vector<PointInfo>, decltype(furthest)>
-        pq(furthest, std::move(v));
+    std::priority_queue<PointInfo, std::vector<PointInfo>, decltype(furthest)> pq(
+        furthest,
+        std::move(v));
 
     for (size_t i = 0; i < points.size(); ++i)
     {
@@ -121,13 +121,15 @@ bool isBuddyStrings(const std::string& first, const std::string& second)
         }
     }
 
-    bool hasDuplicate = std::find_if(begin(firstFrequency), end(firstFrequency),
-                        [](const int i) { return i > 1; }) != firstFrequency.end();
+    bool hasDuplicate =
+        std::find_if(begin(firstFrequency), end(firstFrequency), [](const int i) {
+            return i > 1;
+        }) != firstFrequency.end();
 
     bool hasSwap = (first[mismatches[0]] == second[mismatches[1]] &&
                     first[mismatches[1]] == second[mismatches[0]]);
 
-    return  (mismatchCount == 0 && hasDuplicate) || (mismatchCount == 2 && hasSwap);
+    return (mismatchCount == 0 && hasDuplicate) || (mismatchCount == 2 && hasSwap);
 }
 
 
@@ -143,22 +145,31 @@ bool isNumber(const std::string& str)
         if (isdigit(ch))
         {
             // no sign is allowed after the digit
-            signProcessed = true;
+            signProcessed   = true;
             digitDiscovered = true;
         }
         else if (ch == '-' || ch == '+')
         {
-            if (signProcessed || decimalPointProcessed) { return false; }
+            if (signProcessed || decimalPointProcessed)
+            {
+                return false;
+            }
             signProcessed = true;
         }
         else if (ch == '.')
         {
-            if (decimalPointProcessed || scientificSymbolProcessed) { return false; }
+            if (decimalPointProcessed || scientificSymbolProcessed)
+            {
+                return false;
+            }
             decimalPointProcessed = true;
         }
         else if (ch == 'e')
         {
-            if (scientificSymbolProcessed || !digitDiscovered) { return false; }
+            if (scientificSymbolProcessed || !digitDiscovered)
+            {
+                return false;
+            }
             scientificSymbolProcessed = true;
         }
         else
@@ -179,17 +190,17 @@ bool utf8Validator(const unsigned char* data, size_t size, size_t* errorOffset)
     // 4 bytes : 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
 
     const unsigned char masks[] = {
-        0x80,   // 10000000
-        0xE0,   // 11100000
-        0xF0,   // 11110000
-        0xF8    // 11111000
+        0x80, // 10000000
+        0xE0, // 11100000
+        0xF0, // 11110000
+        0xF8  // 11111000
     };
 
     const unsigned char byteEqual[] = {
-        0x0,    // 00000000
-        0xC0,   // 11000000
-        0xE0,   // 11100000
-        0xF0    // 11110000
+        0x0,  // 00000000
+        0xC0, // 11000000
+        0xE0, // 11100000
+        0xF0  // 11110000
     };
 
     // reset any offset before starting validation
@@ -198,7 +209,7 @@ bool utf8Validator(const unsigned char* data, size_t size, size_t* errorOffset)
         *errorOffset = 0;
     }
 
-    const size_t         c = sizeof(masks) / sizeof(masks[0]);
+    const size_t c         = sizeof(masks) / sizeof(masks[0]);
     const unsigned char* p = data;
     const unsigned char* e = data + size;
 
@@ -256,7 +267,9 @@ bool utf8Validator(const unsigned char* data, size_t size, size_t* errorOffset)
 
 bool utf8Validator(const std::string& data, size_t* errorOffset)
 {
-    return utf8Validator(reinterpret_cast<const unsigned char*>(data.data()), data.size(), errorOffset);
+    return utf8Validator(reinterpret_cast<const unsigned char*>(data.data()),
+                         data.size(),
+                         errorOffset);
 }
 
 
@@ -284,7 +297,9 @@ bool isValidBlock(const std::string& digits, size_t offset, const size_t length)
 }
 
 
-void extractGroups(const std::string& digits, size_t offset, size_t groups,
+void extractGroups(const std::string& digits,
+                   size_t offset,
+                   size_t groups,
                    std::vector<std::string>& result)
 {
     if (groups == 1)
@@ -308,13 +323,9 @@ void extractGroups(const std::string& digits, size_t offset, size_t groups,
             candidate = digits.substr(offset, i);
             extractGroups(digits, offset + i, groups - 1, local);
 
-            for (const auto& l : local)
+            for (const auto& l: local)
             {
-                result.push_back(
-                    std::string(candidate)
-                    .append(1, '.')
-                    .append(l)
-                );
+                result.push_back(std::string(candidate).append(1, '.').append(l));
             }
         }
     }

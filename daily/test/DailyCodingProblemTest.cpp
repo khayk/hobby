@@ -49,13 +49,13 @@ TEST(DailyCodingProblemTest, FindClosestPoints)
     std::vector<Point> expected;
     std::vector<Point> actual;
 
-    k = 2;
+    k        = 2;
     points   = {{0, 0}, {1, 2}, {-3, 4}, {3, 1}};
     expected = {{0, 0}, {1, 2}};
     actual   = findClosestPoints(points, origin, k);
     EXPECT_EQ(actual, expected);
 
-    k = 2;
+    k        = 2;
     points   = {{3, 3}, {5, -1}, {-2, 4}};
     expected = {{3, 3}, {-2, 4}};
     actual   = findClosestPoints(points, origin, k);
@@ -91,20 +91,20 @@ TEST(DailyCodingProblemTest, IsBuddyStrings)
 
 TEST(DailyCodingProblemTest, IsNumber)
 {
-    EXPECT_EQ(isNumber("123"),   true);   // Integer
-    EXPECT_EQ(isNumber("12.3"),  true);   // Floating point
-    EXPECT_EQ(isNumber("-123"),  true);   // Negative numbers
-    EXPECT_EQ(isNumber("-.3"),   true);   // Negative floating point
-    EXPECT_EQ(isNumber("1.5e5"), true);   // Scientific notation
-    EXPECT_EQ(isNumber("5"),     true);
-    EXPECT_EQ(isNumber("0"),     true);
+    EXPECT_EQ(isNumber("123"), true);   // Integer
+    EXPECT_EQ(isNumber("12.3"), true);  // Floating point
+    EXPECT_EQ(isNumber("-123"), true);  // Negative numbers
+    EXPECT_EQ(isNumber("-.3"), true);   // Negative floating point
+    EXPECT_EQ(isNumber("1.5e5"), true); // Scientific notation
+    EXPECT_EQ(isNumber("5"), true);
+    EXPECT_EQ(isNumber("0"), true);
 
-    EXPECT_EQ(isNumber("12a"),   false);
-    EXPECT_EQ(isNumber("1 2"),   false);
+    EXPECT_EQ(isNumber("12a"), false);
+    EXPECT_EQ(isNumber("1 2"), false);
     EXPECT_EQ(isNumber("1e1.2"), false);
-    EXPECT_EQ(isNumber("xabc"),  false);
-    EXPECT_EQ(isNumber("7.2a"),  false);
-    EXPECT_EQ(isNumber(""),      false);
+    EXPECT_EQ(isNumber("xabc"), false);
+    EXPECT_EQ(isNumber("7.2a"), false);
+    EXPECT_EQ(isNumber(""), false);
 }
 
 bool isBigEndian()
@@ -123,19 +123,16 @@ TEST(DailyCodingProblemTest, Utf8Validator)
     unsigned char buffer[8] = {0};
     size_t errorOffset;
 
-    auto pack = [&](uint32_t value)
-    {
+    auto pack = [&](uint32_t value) {
         if (!isBigEndian())
         {
             memset(buffer, 0, sizeof(buffer));
             unsigned char* p = buffer;
             unsigned char* v = (unsigned char*) &value + sizeof(decltype(value)) - 1;
 
-            while ((v > (unsigned char*) &value) && *v == 0)
-                --v;
+            while ((v > (unsigned char*) &value) && *v == 0) --v;
 
-            while (v >= (unsigned char*) &value)
-                *p++ = *v--;
+            while (v >= (unsigned char*) &value) *p++ = *v--;
         }
         else
         {
@@ -159,22 +156,22 @@ TEST(DailyCodingProblemTest, Utf8Validator)
     pack(0b11100000'10100100'10111001); // ह character, 0xE0A4B9
     EXPECT_EQ(utf8Validator(buffer, 3), true);
 
-    pack(0x0024);       // $ character
+    pack(0x0024); // $ character
     EXPECT_EQ(utf8Validator(buffer, 1), true);
 
-    pack(0xC2A2);       // ¢ character
+    pack(0xC2A2); // ¢ character
     EXPECT_EQ(utf8Validator(buffer, 2), true);
 
-    pack(0xE0A4B9);     // ह character
+    pack(0xE0A4B9); // ह character
     EXPECT_EQ(utf8Validator(buffer, 3), true);
 
-    pack(0xE282AC);     // € character
+    pack(0xE282AC); // € character
     EXPECT_EQ(utf8Validator(buffer, 3), true);
 
-    pack(0xED959C);     // 한 character
+    pack(0xED959C); // 한 character
     EXPECT_EQ(utf8Validator(buffer, 3), true);
 
-    pack(0xF0908D88);   // 𐍈 character
+    pack(0xF0908D88); // 𐍈 character
     EXPECT_EQ(utf8Validator(buffer, 4), true);
 }
 
@@ -194,30 +191,30 @@ TEST(DailyCodingProblemTest, RestoreIpAddresses)
     actual   = restoreIpAddresses(digits);
     EXPECT_EQ(actual, expected);
 
-    digits = "110100100";
+    digits   = "110100100";
     expected = {"1.10.100.100", "11.0.100.100", "110.10.0.100", "110.100.10.0"};
-    actual = restoreIpAddresses(digits);
+    actual   = restoreIpAddresses(digits);
     EXPECT_EQ(actual, expected);
 
-    digits = "011010010";
+    digits   = "011010010";
     expected = {"0.110.100.10"};
-    actual = restoreIpAddresses(digits);
+    actual   = restoreIpAddresses(digits);
     EXPECT_EQ(actual, expected);
 
-    digits = "0000";
+    digits   = "0000";
     expected = {"0.0.0.0"};
-    actual = restoreIpAddresses(digits);
+    actual   = restoreIpAddresses(digits);
     EXPECT_EQ(actual, expected);
 
-    digits = "010010";
+    digits   = "010010";
     expected = {"0.10.0.10", "0.100.1.0"};
-    actual = restoreIpAddresses(digits);
+    actual   = restoreIpAddresses(digits);
     EXPECT_EQ(actual, expected);
 }
 
 TEST(DailyCodingProblemTest, MoveZeros)
 {
-    std::vector<int> numbers = {0, 1, 0, 3, 12};
+    std::vector<int> numbers  = {0, 1, 0, 3, 12};
     std::vector<int> expected = {1, 3, 12, 0, 0};
 
     moveZeros(numbers);
