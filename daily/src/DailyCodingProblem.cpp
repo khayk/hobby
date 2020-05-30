@@ -89,9 +89,10 @@ std::vector<Point> findClosestPoints(const std::vector<Point>& points,
 
 bool isBuddyStrings(const std::string& first, const std::string& second)
 {
+    const int alphabetSize = 26;
     size_t mismatchCount {0};
-    std::array<size_t, 2> mismatches = {0};
-    std::array<int, 26> firstFrequency {0};
+    std::array<size_t, 2> mismatches {0};
+    std::array<int, alphabetSize> firstFrequency {0};
 
     if (first.size() != second.size())
     {
@@ -102,7 +103,7 @@ bool isBuddyStrings(const std::string& first, const std::string& second)
     {
         int relativeIndex = first[i] - 'a';
 
-        if (relativeIndex < 0 || relativeIndex > 25)
+        if (relativeIndex < 0 || relativeIndex > alphabetSize - 1)
         {
             return false;
         }
@@ -210,7 +211,7 @@ bool utf8Validator(const unsigned char* data, size_t size, size_t* errorOffset)
         }
         else
         {
-            size_t i;
+            size_t i = 0;
             for (i = 1; i < c; ++i)
             {
                 if ((*p & masks[i]) == byteEqual[i])
@@ -222,7 +223,7 @@ bool utf8Validator(const unsigned char* data, size_t size, size_t* errorOffset)
                     {
                         if (masks[0] != (*p & byteEqual[1]))
                         {
-                            if (errorOffset != 0)
+                            if (errorOffset != nullptr)
                             {
                                 *errorOffset = p - data;
                             }
@@ -239,7 +240,7 @@ bool utf8Validator(const unsigned char* data, size_t size, size_t* errorOffset)
 
             if (i == c)
             {
-                if (errorOffset != 0)
+                if (errorOffset != nullptr)
                 {
                     *errorOffset = p - data;
                 }
@@ -261,7 +262,10 @@ bool utf8Validator(const std::string& data, size_t* errorOffset)
 
 bool isValidBlock(const std::string& digits, size_t offset, const size_t length)
 {
-    if (offset >= digits.size()) return false;
+    if (offset >= digits.size())
+    {
+        return false;
+    }
 
     // corner case handling
     if (digits[offset] == '0')
@@ -306,7 +310,11 @@ void extractGroups(const std::string& digits, size_t offset, size_t groups,
 
             for (const auto& l : local)
             {
-                result.push_back(candidate + "." + l);
+                result.push_back(
+                    std::string(candidate)
+                    .append(1, '.')
+                    .append(l)
+                );
             }
         }
     }
