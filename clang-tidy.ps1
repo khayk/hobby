@@ -1,3 +1,13 @@
+$excludeList = @("*build*", "*out*", "*.vs*", "*.vscode*", "bin")
+
+# Create the list of files that we want to check
+$fileList = New-Object Collections.Generic.List[String]
+Get-ChildItem -Path . -Directory -Exclude $excludeList | Foreach-Object {
+    Get-ChildItem -Path $_.FullName -Include ('*.cpp') -Recurse | Foreach-Object {
+        $fileList.Add($_.FullName)
+    }
+}
+
 # List of checks to analyze manually
 $checkList="-checks=-*,
 modernize-*,
@@ -38,11 +48,9 @@ readability-uppercase-literal-suffix
 
 # -cert-err58-cpp check actually is a good thing, but gaves false positive error on gtest files
 
-# $options=
-
-Get-ChildItem -Path . -Filter *daily*.cpp -Recurse -ErrorAction SilentlyContinue -Force |
-Foreach-Object {
-    clang-tidy.exe -format-style=file $_.FullName $fixCheckList -fix -- `
+# Run tidy with auto fix checks
+foreach ($file in $fileList) {
+    clang-tidy.exe -format-style=file $file $fixCheckList -fix -- `
         -std=c++17 `
         -fdelayed-template-parsing `
         -fms-compatibility-version=19.10 `
@@ -53,14 +61,13 @@ Foreach-Object {
         -Wno-unknown-pragmas `
         -Wno-unused-value `
         -D_ATL_NO_HOSTING -DUNICODE -D_UNICODE -DWIN32 -D_DEBUG -DDEBUG `
-        -I"c:/Code/Repo/Github/hobby/build/googletest-src/googletest/include/" `
+        -I"./build/googletest-src/googletest/include/" `
         -I"./daily/src/"
 }
 
-
-Get-ChildItem -Path . -Filter *daily*.cpp -Recurse -ErrorAction SilentlyContinue -Force |
-Foreach-Object {
-    clang-tidy.exe $_.FullName $checkList -- `
+# Run tidy with all generic check, for manual fixing
+foreach ($file in $fileList) {
+    clang-tidy.exe $file $checkList -- `
         -std=c++17 `
         -fdelayed-template-parsing `
         -fms-compatibility-version=19.10 `
@@ -71,7 +78,6 @@ Foreach-Object {
         -Wno-unknown-pragmas `
         -Wno-unused-value `
         -D_ATL_NO_HOSTING -DUNICODE -D_UNICODE -DWIN32 -D_DEBUG -DDEBUG `
-        -I"c:/Code/Repo/Github/hobby/build/googletest-src/googletest/include/" `
+        -I"./build/googletest-src/googletest/include/" `
         -I"./daily/src/"
 }
-
