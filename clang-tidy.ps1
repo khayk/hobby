@@ -1,9 +1,11 @@
 $excludeList = @("*build*", "*out*", "*.vs*", "*.vscode*", "bin")
+$includeList = @("*.cpp")
 
 # Create the list of files that we want to check
 $fileList = New-Object Collections.Generic.List[String]
+
 Get-ChildItem -Path . -Directory -Exclude $excludeList | Foreach-Object {
-    Get-ChildItem -Path $_.FullName -Include ('*.cpp') -Recurse | Foreach-Object {
+    Get-ChildItem -Path $_.FullName -Include $includeList -Recurse | Foreach-Object {
         $fileList.Add($_.FullName)
     }
 }
