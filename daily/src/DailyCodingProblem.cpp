@@ -359,4 +359,29 @@ void moveZeros(std::vector<int>& numbers)
     }
 }
 
+void rotateMatrix(std::vector<std::vector<int>>& matrix)
+{
+    size_t n = matrix.size();
+
+    for (size_t i = 0; i < (n + 1) / 2; ++i)
+    {
+        for (size_t j = i; j < n - i - 1; ++j)
+        {
+            auto p = i;
+            auto q = j;
+            auto t = matrix[p][q];
+
+            for (int k = 0; k < 3; ++k)
+            {
+                matrix[p][q] = matrix[n - q - 1][p];
+                auto l       = p;
+                p            = n - q - 1;
+                q            = l;
+            }
+
+            matrix[p][q] = t;
+        }
+    }
+}
+
 } // namespace dp

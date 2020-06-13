@@ -95,6 +95,13 @@ std::vector<std::string> restoreIpAddresses(const std::string& digits);
  */
 void moveZeros(std::vector<int>& numbers);
 
+/**
+ * @brief Given a square 2D matrix (n x n), rotate the matrix by 90 degrees clockwise.
+ *
+ * @param matrix An input matrix.
+ */
+void rotateMatrix(std::vector<std::vector<int>>& matrix);
+
 } // namespace dp
 
 #endif // !__DAILY_CODING_PROBLEM_H__
