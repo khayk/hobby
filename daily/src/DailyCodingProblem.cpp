@@ -14,7 +14,7 @@ std::vector<int> findClosestElements(const std::vector<int>& numbers, size_t k, 
     std::vector<int> result(k, std::numeric_limits<int>::max() / 2);
     size_t i = 0;
 
-    for (auto n: numbers)
+    for (auto n : numbers)
     {
         auto dist = std::abs(n - x);
 
@@ -140,7 +140,7 @@ bool isNumber(const std::string& str)
     bool scientificSymbolProcessed {false};
     bool digitDiscovered {false};
 
-    for (auto ch: str)
+    for (auto ch : str)
     {
         if (isdigit(ch))
         {
@@ -323,7 +323,7 @@ void extractGroups(const std::string& digits,
             candidate = digits.substr(offset, i);
             extractGroups(digits, offset + i, groups - 1, local);
 
-            for (const auto& l: local)
+            for (const auto& l : local)
             {
                 result.push_back(std::string(candidate).append(1, '.').append(l));
             }

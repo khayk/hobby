@@ -236,7 +236,7 @@ TEST(DailyCodingProblemTest, MoveZeros)
 
 TEST(DailyCodingProblemTest, RotateMatrix)
 {
-    std::vector<std::vector<int>> numbers = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    std::vector<std::vector<int>> numbers  = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
     std::vector<std::vector<int>> expected = {{7, 4, 1}, {8, 5, 2}, {9, 6, 3}};
 
     rotateMatrix(numbers);
