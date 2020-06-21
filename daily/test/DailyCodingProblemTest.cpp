@@ -307,6 +307,6 @@ TEST(DailyCodingProblemTest, UniqueRooms)
     uint32_t actual;
 
     expected = 2;
-    actual = uniqueRooms(intervals);
+    actual   = uniqueRooms(intervals);
     EXPECT_EQ(actual, expected);
 }

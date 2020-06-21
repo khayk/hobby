@@ -412,8 +412,7 @@ uint64_t uniqueWaysToClimbStairs(uint32_t stairs)
 
 uint32_t uniqueRooms(std::vector<std::pair<uint32_t, uint32_t>>& intervals)
 {
-    std::sort(begin(intervals), end(intervals), [](const auto& l, const auto& r)
-    {
+    std::sort(begin(intervals), end(intervals), [](const auto& l, const auto& r) {
         if (l.first == r.first)
         {
             return l.second <= r.second;
@@ -425,7 +424,7 @@ uint32_t uniqueRooms(std::vector<std::pair<uint32_t, uint32_t>>& intervals)
     std::priority_queue<uint32_t, std::vector<uint32_t>, std::greater<uint32_t>> q;
     uint32_t count = 0;
 
-    for (const auto& i: intervals)
+    for (const auto& i : intervals)
     {
         const auto s = i.first;
         const auto e = i.second;
