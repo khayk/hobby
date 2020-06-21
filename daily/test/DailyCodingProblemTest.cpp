@@ -299,3 +299,14 @@ TEST(DailyCodingProblemTest, UniqueWaysToClimbStairs)
     expected = 165580141;
     EXPECT_EQ(actual, expected);
 }
+
+TEST(DailyCodingProblemTest, UniqueRooms)
+{
+    std::vector<std::pair<uint32_t, uint32_t>> intervals = {{30, 75}, {0, 50}, {60, 150}};
+    uint32_t expected;
+    uint32_t actual;
+
+    expected = 2;
+    actual = uniqueRooms(intervals);
+    EXPECT_EQ(actual, expected);
+}

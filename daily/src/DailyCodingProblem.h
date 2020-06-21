@@ -111,6 +111,17 @@ void rotateMatrix(std::vector<std::vector<int>>& matrix);
 */
 uint64_t uniqueWaysToClimbStairs(uint32_t stairs);
 
+/**
+ * @brief You are given an array of tuples (start, end) representing time intervals
+ *        for lectures. The intervals may be overlapping. Return the number of
+ *        rooms that are required.
+ *
+ * @param intervals An array of intervals
+ *
+ * @return uint32_t Number of rooms required
+ */
+uint32_t uniqueRooms(std::vector<std::pair<uint32_t, uint32_t>>& intervals);
+
 } // namespace dp
 
 #endif // !__DAILY_CODING_PROBLEM_H__

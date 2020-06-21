@@ -6,6 +6,7 @@
 #include <cmath>
 #include <queue>
 #include <array>
+#include <iterator>
 
 namespace dp {
 
@@ -407,6 +408,48 @@ uint64_t uniqueWaysToClimbStairs(uint32_t stairs)
     std::vector<uint64_t> dp(static_cast<uint64_t>(stairs) + 1, 0);
 
     return uniqueWaysToClimbStairsHelper(stairs, dp);
+}
+
+uint32_t uniqueRooms(std::vector<std::pair<uint32_t, uint32_t>>& intervals)
+{
+    std::sort(begin(intervals), end(intervals), [](const auto& l, const auto& r)
+    {
+        if (l.first == r.first)
+        {
+            return l.second <= r.second;
+        }
+
+        return l.first < r.first;
+    });
+
+    std::priority_queue<uint32_t, std::vector<uint32_t>, std::greater<uint32_t>> q;
+    uint32_t count = 0;
+
+    for (const auto& i: intervals)
+    {
+        const auto s = i.first;
+        const auto e = i.second;
+
+        if (q.empty())
+        {
+            ++count;
+        }
+        else
+        {
+            if (s >= q.top())
+            {
+                q.pop();
+            }
+            else
+            {
+                ++count;
+            }
+        }
+
+        q.push(e);
+    }
+
+    return count;
 }
 
 } // namespace dp
