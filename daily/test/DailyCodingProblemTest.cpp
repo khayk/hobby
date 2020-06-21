@@ -267,3 +267,35 @@ TEST(DailyCodingProblemTest, RotateMatrix)
     rotateMatrix(numbers);
     EXPECT_EQ(numbers, expected);
 }
+
+TEST(DailyCodingProblemTest, UniqueWaysToClimbStairs)
+{
+    uint32_t stairs;
+    uint64_t expected;
+    uint64_t actual;
+
+    stairs   = 4;
+    actual   = uniqueWaysToClimbStairs(stairs);
+    expected = 5;
+    EXPECT_EQ(actual, expected);
+
+    stairs   = 5;
+    actual   = uniqueWaysToClimbStairs(stairs);
+    expected = 8;
+    EXPECT_EQ(actual, expected);
+
+    stairs   = 10;
+    actual   = uniqueWaysToClimbStairs(stairs);
+    expected = 89;
+    EXPECT_EQ(actual, expected);
+
+    stairs   = 20;
+    actual   = uniqueWaysToClimbStairs(stairs);
+    expected = 10946;
+    EXPECT_EQ(actual, expected);
+
+    stairs   = 40;
+    actual   = uniqueWaysToClimbStairs(stairs);
+    expected = 165580141;
+    EXPECT_EQ(actual, expected);
+}

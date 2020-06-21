@@ -102,6 +102,15 @@ void moveZeros(std::vector<int>& numbers);
  */
 void rotateMatrix(std::vector<std::vector<int>>& matrix);
 
+/**
+ * @brief Given a positive integer N which represents the number of steps in a staircase. You can either climb 1 or 2 steps at a time.
+ *
+ * @param stairs Represents the number of steps in a staircase
+ *
+ * @return The number of unique ways to climb the stairs.
+*/
+uint64_t uniqueWaysToClimbStairs(uint32_t stairs);
+
 } // namespace dp
 
 #endif // !__DAILY_CODING_PROBLEM_H__

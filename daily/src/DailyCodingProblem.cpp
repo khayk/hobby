@@ -384,4 +384,29 @@ void rotateMatrix(std::vector<std::vector<int>>& matrix)
     }
 }
 
+uint64_t uniqueWaysToClimbStairsHelper(uint32_t stairs, std::vector<uint64_t>& dp)
+{
+    if (stairs <= 2)
+    {
+        return stairs;
+    }
+
+    if (dp[stairs] != 0)
+    {
+        return dp[stairs];
+    }
+
+    dp[stairs - 1] = uniqueWaysToClimbStairsHelper(stairs - 1, dp);
+    dp[stairs - 2] = uniqueWaysToClimbStairsHelper(stairs - 2, dp);
+
+    return dp[stairs - 1] + dp[stairs - 2];
+}
+
+uint64_t uniqueWaysToClimbStairs(uint32_t stairs)
+{
+    std::vector<uint64_t> dp(static_cast<uint64_t>(stairs) + 1, 0);
+
+    return uniqueWaysToClimbStairsHelper(stairs, dp);
+}
+
 } // namespace dp
