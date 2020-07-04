@@ -122,6 +122,16 @@ uint64_t uniqueWaysToClimbStairs(uint32_t stairs);
  */
 uint32_t uniqueRooms(std::vector<std::pair<uint32_t, uint32_t>>& intervals);
 
+/**
+ * @brief Given an array of size n, and all values in the array are in the range 1 to n, 
+ *        find all the duplicates. 
+ *
+ * @param numbers The array of numbers in the range 1 to n
+ * 
+ * @return The array of duplicates
+ */
+std::vector<uint32_t> findDuplicates(const std::vector<uint32_t>& numbers);
+
 } // namespace dp
 
 #endif // !__DAILY_CODING_PROBLEM_H__

@@ -310,3 +310,28 @@ TEST(DailyCodingProblemTest, UniqueRooms)
     actual   = uniqueRooms(intervals);
     EXPECT_EQ(actual, expected);
 }
+
+TEST(DailyCodingProblemTest, FindDuplicates)
+{
+    std::vector<uint32_t> numbers;
+    std::vector<uint32_t> expected;
+    std::vector<uint32_t> actual;
+
+    numbers  = {4, 3, 2, 7, 8, 2, 3, 1};
+    expected = {2, 3};
+    actual   = findDuplicates(numbers);
+
+    EXPECT_EQ(actual, expected);
+
+    numbers  = {1, 2, 1};
+    expected = {1};
+    actual   = findDuplicates(numbers);
+
+    EXPECT_EQ(actual, expected);
+
+    numbers  = {7, 8, 3, 4, 7, 6, 6, 8};
+    expected = {6, 7, 8};
+    actual   = findDuplicates(numbers);
+
+    EXPECT_EQ(actual, expected);
+}

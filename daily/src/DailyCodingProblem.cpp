@@ -7,6 +7,7 @@
 #include <queue>
 #include <array>
 #include <iterator>
+#include <system_error>
 
 namespace dp {
 
@@ -449,6 +450,44 @@ uint32_t uniqueRooms(std::vector<std::pair<uint32_t, uint32_t>>& intervals)
     }
 
     return count;
+}
+
+
+std::vector<uint32_t> findDuplicates(const std::vector<uint32_t>& numbers)
+{
+    uint32_t n = static_cast<uint32_t>(numbers.size());
+    std::vector<uint32_t> duplicates(n, 0);
+
+    for (const auto& v : numbers)
+    {
+        if (v < 1 && v > n)
+        {
+            throw std::system_error(std::make_error_code(std::errc::invalid_argument));
+        }
+
+        duplicates[v - 1] += n;
+    }
+
+    for (uint32_t i = 0; i < n; ++i)
+    {
+        if (duplicates[i] > n)
+        {
+            duplicates[i] = i + 1;
+        }
+        else
+        {
+            duplicates[i] = 0;
+        }
+    }
+
+    auto it = std::remove_if(std::begin(duplicates),
+                             std::end(duplicates),
+                             [](const uint32_t& v) {
+                                 return v == 0;
+                             });
+    duplicates.erase(it, std::end(duplicates));
+
+    return duplicates;
 }
 
 } // namespace dp
