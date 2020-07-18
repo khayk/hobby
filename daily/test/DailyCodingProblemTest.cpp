@@ -1,5 +1,6 @@
 ﻿#include <gtest/gtest.h>
 #include "DailyCodingProblem.h"
+#include <numeric>
 
 using namespace dp;
 
@@ -342,4 +343,50 @@ TEST(DailyCodingProblemTest, FindPairWithGivenSum)
 
     EXPECT_EQ(findPairWithGivenSum(numbers, 17), true);
     EXPECT_EQ(findPairWithGivenSum(numbers, 26), false);
+}
+
+TEST(DailyCodingProblemTest, ContiguousSumToK)
+{
+    auto rangeSum = [](const std::vector<int>& numbers,
+                       const std::pair<int, int>& range) {
+        return std::accumulate(numbers.begin() + range.first,
+                               numbers.begin() + range.second + 1,
+                               0);
+    };
+
+    std::vector<int> numbers = {1, 2, 3, 4, 5};
+    std::pair<int, int> out;
+
+    EXPECT_EQ(contiguousSumToK(numbers, 9, out), true);
+    EXPECT_EQ(rangeSum(numbers, out), 9);
+
+    EXPECT_EQ(contiguousSumToK(numbers, 10, out), true);
+    EXPECT_EQ(rangeSum(numbers, out), 10);
+
+    EXPECT_EQ(contiguousSumToK(numbers, 6, out), true);
+    EXPECT_EQ(rangeSum(numbers, out), 6);
+
+    EXPECT_EQ(contiguousSumToK(numbers, 15, out), true);
+    EXPECT_EQ(rangeSum(numbers, out), 15);
+
+    EXPECT_EQ(contiguousSumToK(numbers, 16, out), false);
+
+    numbers = {1, 1, 7};
+    EXPECT_EQ(contiguousSumToK(numbers, 7, out), true);
+    EXPECT_EQ(rangeSum(numbers, out), 7);
+
+    EXPECT_EQ(contiguousSumToK(numbers, 8, out), true);
+    EXPECT_EQ(rangeSum(numbers, out), 8);
+
+    EXPECT_EQ(contiguousSumToK(numbers, 9, out), true);
+    EXPECT_EQ(rangeSum(numbers, out), 9);
+
+    numbers = {9, 4, 20, 3, 10, 5};
+    EXPECT_EQ(contiguousSumToK(numbers, 33, out), true);
+    EXPECT_EQ(rangeSum(numbers, out), 33);
+
+    // @todo:hayk - doesn't work for negative numbers, correct
+    numbers = {10, 2, -2, -20, 10};
+    EXPECT_EQ(contiguousSumToK(numbers, -10, out), true);
+    EXPECT_EQ(rangeSum(numbers, out), -10);
 }

@@ -537,4 +537,29 @@ bool findPairWithGivenSum(const std::vector<int>& numbers, int k)
     return false;
 }
 
+bool contiguousSumToK(const std::vector<int>& numbers,
+                      const int k,
+                      std::pair<int, int>& out)
+{
+    std::unordered_map<int, size_t> sums;
+
+    int sum = 0;
+    for (auto i = 0; i < (int) numbers.size(); ++i)
+    {
+        sums.insert({sum, i});
+        sum += numbers[i];
+
+        auto it = sums.find(sum - k);
+
+        if (it != sums.end())
+        {
+            out.first  = static_cast<int>(it->second);
+            out.second = i;
+            return true;
+        }
+    }
+
+    return false;
+}
+
 } // namespace dp

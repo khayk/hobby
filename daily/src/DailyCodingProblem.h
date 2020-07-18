@@ -147,6 +147,19 @@ std::vector<uint32_t> findDuplicates(const std::vector<uint32_t>& numbers);
  */
 bool findPairWithGivenSum(const std::vector<int>& numbers, int k);
 
+/**
+ * @brief   Given a list of integers and a number k, return which contiguous
+ *          elements of the list sum to k.
+ *
+ *          For example, if the list is [1, 2, 3, 4, 5] and K is 9, then it
+ *          should return [2, 3, 4].
+ *
+ * @param numbers  List of integers
+ * @param k        Value of the sum
+ * @return bool    true if such sequence is found, otherwise false.
+ */
+bool contiguousSumToK(const std::vector<int>& numbers, int k, std::pair<int, int>& out);
+
 } // namespace dp
 
 #endif // !__DAILY_CODING_PROBLEM_H__
