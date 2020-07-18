@@ -1,6 +1,7 @@
 #include "DailyCodingProblem.h"
 
 #include <unordered_map>
+#include <unordered_set>
 #include <algorithm>
 #include <limits>
 #include <cmath>
@@ -8,6 +9,33 @@
 #include <array>
 #include <iterator>
 #include <system_error>
+
+//#define INTERACTIVE
+
+#ifdef INTERACTIVE
+    #include <iostream>
+
+std::ostream& stream()
+{
+    return std::cout;
+}
+#else
+class NullStream
+{
+};
+
+template <typename T>
+NullStream& operator<<(NullStream& ns, const T&)
+{
+    return ns;
+}
+
+NullStream& stream()
+{
+    static NullStream ns;
+    return ns;
+}
+#endif
 
 namespace dp {
 
@@ -488,6 +516,25 @@ std::vector<uint32_t> findDuplicates(const std::vector<uint32_t>& numbers)
     duplicates.erase(it, std::end(duplicates));
 
     return duplicates;
+}
+
+bool findPairWithGivenSum(const std::vector<int>& numbers, int k)
+{
+    std::unordered_set<int> pairs;
+
+    for (auto i : numbers)
+    {
+        if (pairs.find(k - i) != pairs.end())
+        {
+            stream() << "pair with given sum " << k << " is (" << i << ", " << k - i
+                     << ")\n";
+            return true;
+        }
+
+        pairs.insert(i);
+    }
+
+    return false;
 }
 
 } // namespace dp

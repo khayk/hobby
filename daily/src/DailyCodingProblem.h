@@ -123,14 +123,29 @@ uint64_t uniqueWaysToClimbStairs(uint32_t stairs);
 uint32_t uniqueRooms(std::vector<std::pair<uint32_t, uint32_t>>& intervals);
 
 /**
- * @brief Given an array of size n, and all values in the array are in the range 1 to n, 
- *        find all the duplicates. 
+ * @brief Given an array of size n, and all values in the array are in the range 1 to n,
+ *        find all the duplicates.
  *
  * @param numbers The array of numbers in the range 1 to n
- * 
+ *
  * @return The array of duplicates
  */
 std::vector<uint32_t> findDuplicates(const std::vector<uint32_t>& numbers);
+
+/**
+ * @brief  Given a list of numbers and a number k, return whether any two
+ *         numbers from the list add up to k. (asked by Google)
+ *
+ * @example, given [10, 15, 3, 7] and k of 17, return true since 10 + 7 is 17.
+ *
+ * Bonus: Can you do this in one pass?
+ *
+ * @param numbers  Array of integer numbers
+ * @param k        Given sum of searched 2 pairs
+ *
+ * @return true  if such a pair exists, false otherwise
+ */
+bool findPairWithGivenSum(const std::vector<int>& numbers, int k);
 
 } // namespace dp
 

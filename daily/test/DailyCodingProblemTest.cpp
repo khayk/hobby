@@ -335,3 +335,11 @@ TEST(DailyCodingProblemTest, FindDuplicates)
 
     EXPECT_EQ(actual, expected);
 }
+
+TEST(DailyCodingProblemTest, FindPairWithGivenSum)
+{
+    std::vector<int> numbers {10, 15, 3, 7};
+
+    EXPECT_EQ(findPairWithGivenSum(numbers, 17), true);
+    EXPECT_EQ(findPairWithGivenSum(numbers, 26), false);
+}
