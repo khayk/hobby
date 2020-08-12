@@ -54,3 +54,4 @@ endif()
 # ============================================================================
 
 add_subdirectory(daily)
+add_subdirectory(deitel)
