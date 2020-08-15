@@ -70,3 +70,32 @@ TEST(TurtleGraphicsTest, DrawLine)
 
     EXPECT_EQ(expected, output);
 }
+
+TEST(TurtleGraphicsTest, DrawStais)
+{
+    const size_t width  = 5;
+    const size_t height = 5;
+
+    TurtleGraphics graphics(width, height);
+
+    std::vector<int> input = {2, 
+        5, 1, 3, 5, 1, 4, 
+        5, 1, 3, 5, 1, 4, 
+        5, 1, 3, 5, 1, 4,
+        5, 1, 3, 5, 1, 4,
+        5, 1, 3, 5, 1, 4,
+        9};
+
+    graphics.simulate(input);
+
+    std::string output;
+    graphics.print(output);
+
+    std::string expected = "**   \n"
+                           " **  \n"
+                           "  ** \n"
+                           "   **\n"
+                           "    *\n";
+
+    EXPECT_EQ(expected, output);
+}

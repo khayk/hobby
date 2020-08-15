@@ -44,6 +44,13 @@ function dumpCommandLine() {
     Write-Output "fix        : $fix"
     Write-Output "safeOnly   : $safeOnly"
     Write-Output "redirectTo : $redirectTo"
+    Write-Output "------------------------------"
+    Write-Output ""
+    Write-Output "=============================="
+    Write-Output "****  Special variables   ****"
+    Write-Output "------------------------------"
+    Write-Output "pwd        : $pwd"
+    Write-Output "script dir : $PSScriptRoot"
     Write-Output ""
     Write-Output "------------------------------"
 }
@@ -51,11 +58,13 @@ function dumpCommandLine() {
 # Dump command line
 dumpCommandLine
 
-if (Test-Path $env:VCPKG_ROOT) {
+if (Test-Path $env:VCPKG_ROOT)
+{
     $vcpkgRoot=$env:VCPKG_ROOT
     Write-Output "vcpkg detected at this location '$vcpkgRoot'"
 }
-else {
+else
+{
     Write-Output "Please define environment varialbe VCPKG_ROOT"
     Exit
 }
@@ -66,7 +75,7 @@ Write-Output "vcpkg include dir is '$vcpkgInclude'"
 
 # List of checks that are safe to be fixed automatically
 $safeChecks = @(
-    "-checks=-*",
+    "-*",
     "llvm-namespace-comment",
     "modernize-use-nullptr",
     "modernize-use-override",
@@ -79,7 +88,7 @@ $safeChecks = @(
 #   - Recheck if we need to enable these: -modernize-use-nodiscard
 #   - Configure check for this: -readability-identifier-naming
 $allChecks = @(
-    "-checks=-*",
+    "-*",
     "modernize-*",
     "readability-*",
     "cppcoreguidelines-*",
@@ -91,6 +100,7 @@ $allChecks = @(
     "-llvm-include-order",
     "-cert-err58-cpp",
     "-cppcoreguidelines-avoid-c-arrays",
+    "-cppcoreguidelines-avoid-goto",
     "-cppcoreguidelines-avoid-magic-numbers",
     "-cppcoreguidelines-owning-memory",
     "-cppcoreguidelines-pro-bounds-array-to-pointer-decay",
@@ -149,7 +159,7 @@ $options = @("-std=c++17",
 # ------------------------------------------------------------------------------
 
 # Content of clang-tidy when no args are specified
-$excludeList = @(".vs", ".vscode", "bin", "build", "docs")
+$excludeList = @(".vs", ".vscode", "\\bin\\", "\\build\\", "\\docs\\")
 $includeList = @("*.cpp")
 $projectFolders = @("daily\\",
                     "deitel\\")
@@ -159,20 +169,24 @@ $fileList = @()
 $folderList = @()
 
 # Configure script as the user commended
-if ($files.Length -ne 0) {
+if ($files.Length -ne 0)
+{
     $fileList = $files.Split(';') | Where-Object { $_Length -ne 0 }
     Write-Output "User defined file list: $fileList"
 }
-elseif ($folders.Length -ne 0) {
+elseif ($folders.Length -ne 0)
+{
     $folderList = $folders.Split(';') | Where-Object { $_Length -ne 0 }
     Write-Output "User defined folder list: $folderList"
 }
-else {
+else
+{
     $folderList += $projectFolders
     Write-Output "Default folder list: $folderList"
 }
 
-if ($folderList.Count -gt 0) {
+if ($folderList.Count -gt 0)
+{
     Write-Output "Constructing the list of files to be processed..."
 
     $filter = $folderList -join '|'
@@ -188,20 +202,22 @@ if ($folderList.Count -gt 0) {
 }
 
 $checkList = $allChecks
-$fixCommand = "--"
+$fixCommand = @("--")
 
 if ($fix)
 {
     # Activate safe checks only, these are checks that 100% are safe to apply
     if ($safeOnly)
     {
+        Write-Output "Running safe checks only"
         $checkList = $safeChecks
     }
 
-    $fixCommand = "-format-style=file -fix" + $fixCommand
+    $fixCommand = @("-format-style=file", "-fix", "--")
 }
 
-$checks = $checkList -join ','
+
+$checks = "-checks={0}" -f ($checkList -join ',')
 
 # ==============================================================================
 # Run clang tidy application
@@ -209,12 +225,14 @@ $checks = $checkList -join ','
 
 $counter = 1
 
-if ($redirectTo.Length -gt 0) {
+if ($redirectTo.Length -gt 0)
+{
     # Clean the content of the file
     '' > $redirectTo
 }
 
-foreach ($file in $fileList) {
+foreach ($file in $fileList)
+{
     # Boilerplate staff, see nice progress
     $percent = [Math]::Round($counter * 100 / $fileList.Count)
     $relativeName = $file
@@ -225,11 +243,13 @@ foreach ($file in $fileList) {
         $relativeName = $file.Remove(0, $pos)
     }
 
-    if ($redirectTo.Length -gt 0) {
+    if ($redirectTo.Length -gt 0)
+    {
         Write-Output "Redirecting"
         clang-tidy.exe $file $checks $fixCommand $options $preprocessor $includes >>$redirectTo
     }
-    else {
+    else
+    {
         clang-tidy.exe $file $checks $fixCommand $options $preprocessor $includes
     }
 
