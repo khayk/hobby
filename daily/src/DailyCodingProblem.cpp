@@ -25,7 +25,7 @@ class NullStream
 };
 
 template <typename T>
-NullStream& operator<<(NullStream& ns, const T&)
+NullStream& operator<<(NullStream& ns, const T& /*unused*/)
 {
     return ns;
 }
@@ -450,7 +450,7 @@ uint32_t uniqueRooms(std::vector<std::pair<uint32_t, uint32_t>>& intervals)
         return l.first < r.first;
     });
 
-    std::priority_queue<uint32_t, std::vector<uint32_t>, std::greater<uint32_t>> q;
+    std::priority_queue<uint32_t, std::vector<uint32_t>, std::greater<>> q;
     uint32_t count = 0;
 
     for (const auto& i : intervals)
@@ -483,7 +483,7 @@ uint32_t uniqueRooms(std::vector<std::pair<uint32_t, uint32_t>>& intervals)
 
 std::vector<uint32_t> findDuplicates(const std::vector<uint32_t>& numbers)
 {
-    uint32_t n = static_cast<uint32_t>(numbers.size());
+    auto n = static_cast<uint32_t>(numbers.size());
     std::vector<uint32_t> duplicates(n, 0);
 
     for (const auto& v : numbers)
@@ -544,7 +544,7 @@ bool contiguousSumToK(const std::vector<int>& numbers,
     std::unordered_map<int, size_t> sums;
 
     int sum = 0;
-    for (auto i = 0; i < (int) numbers.size(); ++i)
+    for (auto i = 0; i < static_cast<int>(numbers.size()); ++i)
     {
         sums.insert({sum, i});
         sum += numbers[i];

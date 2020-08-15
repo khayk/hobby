@@ -271,9 +271,9 @@ TEST(DailyCodingProblemTest, RotateMatrix)
 
 TEST(DailyCodingProblemTest, UniqueWaysToClimbStairs)
 {
-    uint32_t stairs;
-    uint64_t expected;
-    uint64_t actual;
+    uint32_t stairs   = 0;
+    uint64_t expected = 0;
+    uint64_t actual   = 0;
 
     stairs   = 4;
     actual   = uniqueWaysToClimbStairs(stairs);
@@ -304,8 +304,8 @@ TEST(DailyCodingProblemTest, UniqueWaysToClimbStairs)
 TEST(DailyCodingProblemTest, UniqueRooms)
 {
     std::vector<std::pair<uint32_t, uint32_t>> intervals = {{30, 75}, {0, 50}, {60, 150}};
-    uint32_t expected;
-    uint32_t actual;
+    uint32_t expected                                    = 0;
+    uint32_t actual                                      = 0;
 
     expected = 2;
     actual   = uniqueRooms(intervals);
