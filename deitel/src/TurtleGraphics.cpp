@@ -38,7 +38,7 @@ void TurtleGraphics::simulate(const std::vector<int>& input)
     std::string output;
     int steps = 0;
 
-    for (auto i = 0; i < input.size(); ++i)
+    for (auto i = 0u; i < input.size(); ++i)
     {
         auto command = details::readCommand(input, i);
 

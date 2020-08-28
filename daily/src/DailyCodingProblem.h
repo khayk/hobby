@@ -160,6 +160,15 @@ bool findPairWithGivenSum(const std::vector<int>& numbers, int k);
  */
 bool contiguousSumToK(const std::vector<int>& numbers, int k, std::pair<int, int>& out);
 
+/**
+ * @brief Given a list of numbers, where every number shows up twice except
+ *        for one number, find that one number.
+ *
+ * @param numbers  List of integers
+ * @return int     Return the non duplicate number
+ */
+int findUniqueNumber(const std::vector<int>& numbers);
+
 } // namespace dp
 
 #endif // !__DAILY_CODING_PROBLEM_H__

@@ -390,3 +390,12 @@ TEST(DailyCodingProblemTest, ContiguousSumToK)
     EXPECT_EQ(contiguousSumToK(numbers, -10, out), true);
     EXPECT_EQ(rangeSum(numbers, out), -10);
 }
+
+TEST(DailyCodingProblemTest, FindUniqueNumber)
+{
+    std::vector<int> numbers = {1, 1, 3, 2, 2, 3, 5};
+    EXPECT_EQ(findUniqueNumber(numbers), 5);
+
+    numbers = {3, 3, 1, 1, 4, 4, 6, 6, 7};
+    EXPECT_EQ(findUniqueNumber(numbers), 7);
+}
