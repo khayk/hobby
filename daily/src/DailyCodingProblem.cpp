@@ -370,6 +370,7 @@ std::vector<std::string> restoreIpAddresses(const std::string& digits)
     return addresses;
 }
 
+
 void moveZeros(std::vector<int>& numbers)
 {
     size_t writePos = 0;
@@ -388,6 +389,7 @@ void moveZeros(std::vector<int>& numbers)
         numbers[writePos++] = 0;
     }
 }
+
 
 void rotateMatrix(std::vector<std::vector<int>>& matrix)
 {
@@ -414,6 +416,7 @@ void rotateMatrix(std::vector<std::vector<int>>& matrix)
     }
 }
 
+
 uint64_t uniqueWaysToClimbStairsHelper(uint32_t stairs, std::vector<uint64_t>& dp)
 {
     if (stairs <= 2)
@@ -432,12 +435,14 @@ uint64_t uniqueWaysToClimbStairsHelper(uint32_t stairs, std::vector<uint64_t>& d
     return dp[stairs - 1] + dp[stairs - 2];
 }
 
+
 uint64_t uniqueWaysToClimbStairs(uint32_t stairs)
 {
     std::vector<uint64_t> dp(static_cast<uint64_t>(stairs) + 1, 0);
 
     return uniqueWaysToClimbStairsHelper(stairs, dp);
 }
+
 
 uint32_t uniqueRooms(std::vector<std::pair<uint32_t, uint32_t>>& intervals)
 {
@@ -518,6 +523,7 @@ std::vector<uint32_t> findDuplicates(const std::vector<uint32_t>& numbers)
     return duplicates;
 }
 
+
 bool findPairWithGivenSum(const std::vector<int>& numbers, int k)
 {
     std::unordered_set<int> pairs;
@@ -536,6 +542,7 @@ bool findPairWithGivenSum(const std::vector<int>& numbers, int k)
 
     return false;
 }
+
 
 bool contiguousSumToK(const std::vector<int>& numbers,
                       const int k,
@@ -560,6 +567,19 @@ bool contiguousSumToK(const std::vector<int>& numbers,
     }
 
     return false;
+}
+
+
+int findUniqueNumber(const std::vector<int>& numbers)
+{
+    int unique = 0;
+
+    for (const auto& i: numbers)
+    {
+        unique ^= i;
+    }
+
+    return unique;
 }
 
 } // namespace dp
