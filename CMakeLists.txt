@@ -1,13 +1,17 @@
 cmake_minimum_required(VERSION 3.1)
 project(hobby)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
+
 if(MSVC)
+   string(REGEX REPLACE "/W[3|4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
    add_compile_options(/W4)
+   add_compile_options(/MP)
+   add_compile_definitions(_WIN32_WINNT=0x0A00)
 else()
    add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
-
-set(CMAKE_CXX_STANDARD 17)
 
 # Diagnostic information
 message("Generated with config types: ${CMAKE_CONFIGURATION_TYPES}")
@@ -55,3 +59,4 @@ endif()
 
 add_subdirectory(daily)
 add_subdirectory(deitel)
+add_subdirectory(skienna)
