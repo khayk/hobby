@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(hobby)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 if(MSVC)
@@ -57,6 +57,7 @@ endif()
 # Project related stuff
 # ============================================================================
 
-add_subdirectory(daily)
-add_subdirectory(deitel)
-add_subdirectory(skienna)
+add_subdirectory(problems/daily)
+add_subdirectory(problems/deitel)
+add_subdirectory(problems/skienna)
+add_subdirectory(patterns)

@@ -1,20 +1,21 @@
-project(deitel)
+project(skienna)
 
 # add_definitions(-fprofile-arcs -ftest-coverage)
 
-file(GLOB DEITEL_FILES
+file(GLOB INTRO_FILES
    "src/*.h"
    "src/*.cpp"
 )
 
-file(GLOB DEITEL_TEST_FILES
+file(GLOB INTRO_TEST_FILES
    "test/*.h"
    "test/*.cpp"
 )
 
 include_directories(src)
-add_executable(${PROJECT_NAME} ${DEITEL_FILES} ${DEITEL_TEST_FILES})
-target_link_libraries(${PROJECT_NAME} gtest_main)
+add_executable(${PROJECT_NAME} ${INTRO_FILES} ${INTRO_TEST_FILES})
+target_link_libraries(${PROJECT_NAME} gtest gtest_main)
+
 # target_link_libraries(${PROJECT_NAME} -fprofile-arcs)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND COVERAGE)
@@ -24,7 +25,7 @@ if(CMAKE_COMPILER_IS_GNUCXX AND COVERAGE)
    append_coverage_compiler_flags()
 
    setup_target_for_coverage_lcov(
-      NAME        ${PROJECT_NAME}_coverage
+      NAME        ${PROJECT_NAME}_coverage 
       EXECUTABLE  ${PROJECT_NAME} coverage
       EXCLUDE     ${CMAKE_BINARY_DIR}/googletest-src/*)
 

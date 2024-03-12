@@ -19,7 +19,7 @@ file(GLOB DAILY_TEST_FILES
 
 include_directories(src)
 add_executable(${PROJECT_NAME} ${DAILY_FILES} ${DAILY_TEST_FILES})
-target_link_libraries(${PROJECT_NAME} gtest_main)
+target_link_libraries(${PROJECT_NAME} gtest gtest_main)
 # target_link_libraries(${PROJECT_NAME} -fprofile-arcs)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND COVERAGE)
