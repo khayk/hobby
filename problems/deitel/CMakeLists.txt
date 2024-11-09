@@ -1,6 +1,22 @@
+cmake_minimum_required(VERSION 3.5)
+
+message("CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
+message("VCPKG_ROOT          : $ENV{VCPKG_ROOT}")
+
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+   set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+      CACHE STRING "")
+   message("CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
+endif()
+
 project(deitel)
 
 # add_definitions(-fprofile-arcs -ftest-coverage)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(GLOB DEITEL_FILES
    "src/*.h"
@@ -12,9 +28,16 @@ file(GLOB DEITEL_TEST_FILES
    "test/*.cpp"
 )
 
+enable_testing()
+find_package(GTest REQUIRED)
+message("Gtest libraries       : ${GTEST_BOTH_LIBRARIES}")
+
 include_directories(src)
 add_executable(${PROJECT_NAME} ${DEITEL_FILES} ${DEITEL_TEST_FILES})
-target_link_libraries(${PROJECT_NAME} gtest gtest_main)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+   ${GTEST_BOTH_LIBRARIES}
+)
 # target_link_libraries(${PROJECT_NAME} -fprofile-arcs)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND COVERAGE)
